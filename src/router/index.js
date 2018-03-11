@@ -20,76 +20,96 @@ import Address from '../components/about/contact/Address'
 Vue.use(Router)
 
 export default new Router({
-  mode:'history',
-  routes: [
-    {
+  mode: 'history',
+  routes: [{
       path: '/',
-      name:'home',
-      component:Home
-    }
-    ,{
-        path: '/login',
-        name:'login',
-        component:Login
+      name: 'home',
+      components: {
+        default: Home,
+        'history': History,
+        'orderingGuide': OrderingGuide,
+        'delivery': Delivery
       }
-      ,{
-        path: '/admin',
-        name:'admin',
-        component:Admin
-      }
-      ,{
-        path: '/menu',
-        name:'menu',
-        component:Menu
-      }
-      ,{
-        path: '/register',
-        name:'register',
-        component:Register
-      }
-      ,{
-        path: '/about',
-        name:'about',
-        redirect:'/contact',
-        component:About,
-        children:[
-            {
-                path:'/about/history',
-                name:'history',
-                component:History
-            }
-            ,{
-                path:'/delivery',
-                name:'delivery',
-                component:Delivery
-            },{
-                path:'/contact',
-                name:'contact',
-                component:Contact,
-                redirect:'/phone',
-                children:[
-                    {
-                        path:'/phone',
-                        name:'phone',
-                        component:Phone
-                    },{
-                        path:'/address',
-                        name:'address',
-                        component:Address
-                    }
-                ]
-            },{
-                path:'/orderingGuide',
-                name:'orderingGuide',
-                component:OrderingGuide
-            }
-            
-        ]
+    }, {
+      path: '/login',
+      name: 'login',
+      component: Login
+    }, {
+      path: '/admin',
+      name: 'admin',
+      component: Admin
+    }, {
+      path: '/menu',
+      name: 'menu',
+      component: Menu
+    }, {
+      path: '/register',
+      name: 'register',
+      component: Register
+    }, {
+      path: '/about',
+      name: 'about',
+      redirect: '/contact',
+      component: About,
+      // 路由独享守卫
+      //   beforeEnter: (to, from, next) => {
+      //     if (to.path === '/login' || to.path === '/register') {
+      //       next();
+      //     } else {
+      //       alert('还未登录，请先登录!');
+      //       next('/login');
+      //     }
+      //   },
+      children: [{
+          path: '/about/history',
+          name: 'history',
+          component: History
+        }, {
+          path: '/delivery',
+          name: 'delivery',
+          component: Delivery
+        }, {
+          path: '/contact',
+          name: 'contact',
+          component: Contact,
+          redirect: '/phone',
+          children: [{
+            path: '/phone',
+            name: 'phone',
+            component: Phone
+          }, {
+            path: '/address',
+            name: 'address',
+            component: Address
+          }]
+        }, {
+          path: '/orderingGuide',
+          name: 'orderingGuide',
+          component: OrderingGuide
+        }
 
-      },
-      {
-        path:'*',
-        redirect:'/'
-      }
-  ]
+      ]
+
+    },
+    {
+      path: '*',
+      redirect: '/'
+    }
+  ],
+  // 路由滚动行为
+  scrollBehavior(to,from,savedPosition){
+    // 定位滚动条到按钮的位置
+    // return { selector: '.btn'} 
+
+
+    // 滚动到指定位置
+    // if (savedPosition) {
+    //   return savedPosition
+    // } else {
+    //   return {
+    //     x: 0,
+    //     y: 100
+    //   }
+    // }
+  }
 })
