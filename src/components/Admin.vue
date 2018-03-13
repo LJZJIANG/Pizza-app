@@ -31,7 +31,7 @@ import newPizza from "./NewPizza";
 export default {
   data() {
     return {
-      MenuItems: []
+      // MenuItems: []
     };
   },
   components: {

@@ -63,25 +63,31 @@ export default {
                 size:this.newPizza.size
               },
               {
-                price1:this.newPizza.price1,
-                size1:this.newPizza.size1
+                price:this.newPizza.price1,
+                size:this.newPizza.size1
               }
             ]
           }
-          fetch('https://wd4944622902dibypg.wilddogio.com/menu.json',{
-            method:'POST',
-            headers:{
-              'Content-type':'application/json'
-            },
-            body:JSON.stringify(data)// 必须转换我为字符串，不然会提示跨域
-          }).then(res=>{
-            return res.json(); // 将数据转换为json格式
-          }).then(data=>{
-            // console.log(data)
-            this.$router.push('menu');
-          }).catch(err=>{
-            console.log(err);
-          })
+          // feach 方式请求数据
+
+          // fetch('menu.json',{
+          //   method:'POST',
+          //   headers:{
+          //     'Content-type':'application/json'
+          //   },
+          //   body:JSON.stringify(data)// 必须转换我为字符串，不然会提示跨域
+          // }).then(res=>{
+          //   return res.json(); // 将数据转换为json格式
+          // }).then(data=>{
+          //   // console.log(data)
+          //   this.$router.push('menu');
+          // }).catch(err=>{
+          //   console.log(err);
+          // })
+
+          // axios 方式请求数据
+          this.$axios.post('menu.json',data)
+          .then(res=> this.$router.push('menu'))
       }
   }
 }

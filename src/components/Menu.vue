@@ -57,54 +57,14 @@ export default {
   data() {
     return {
       basketText: "购物车空空如也...",
-      baskets: [], //购物车
-      getMenuItems: {
-        1: {
-          name: "榴莲pizza",
-          description: "这是喜欢吃榴莲朋友的最佳选择",
-          options: [
-            {
-              size: 9,
-              price: 38
-            },
-            {
-              size: 12,
-              price: 48
-            }
-          ]
-        },
-        2: {
-          name: "芝士pizza",
-          description: "芝士杀手,浓浓的芝士丝, 食欲瞬间爆棚",
-          options: [
-            {
-              size: 9,
-              price: 38
-            },
-            {
-              size: 12,
-              price: 48
-            }
-          ]
-        },
-        3: {
-          name: "夏威夷pizza",
-          description: "众多人的默认选择",
-          options: [
-            {
-              size: 9,
-              price: 36
-            },
-            {
-              size: 12,
-              price: 46
-            }
-          ]
-        }
-      }
+      baskets: [] //购物车
+      // getMenuItems: {}
     };
   },
   computed: {
+    getMenuItems(){
+      return this.$store.state.menuItems;
+    },
     // 计算购物车商品总价
     total() {
       let totalMoney = 0;
@@ -113,6 +73,15 @@ export default {
       }
       return totalMoney;
     }
+  },
+  created(){
+    // axios 方式请求数据
+    // this.$axios.get('menu.json')
+    // .then(res=> this.getMenuItems = res.data)
+
+    // 将请求下来的数据存储到 vuex 中
+    this.$axios.get('menu.json')
+    .then(res=> this.$store.commit('setMenuItems',res.data))
   },
   methods: {
     // 添加购物车
