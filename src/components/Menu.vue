@@ -23,7 +23,7 @@
       </table>
     </div>
     <!-- 购物车 -->
-    <div class="col-sm-12 col-md-4">      
+    <div class="col-sm-12 col-md-4">
       <div v-if="baskets.length>0">
         <table class="table">
          <thead class="thead-default">
@@ -63,7 +63,10 @@ export default {
   },
   computed: {
     getMenuItems(){
-      return this.$store.state.menuItems;
+      // return this.$store.state.menuItems;
+
+      // 通过vuex getter 获取属性的状态
+      return this.$store.getters.getMenuItems
     },
     // 计算购物车商品总价
     total() {
@@ -95,7 +98,7 @@ export default {
 
       // 判断购物车中是否已有对应商品，如果存在，直接增加数量
       if (this.baskets.length != null && this.baskets.length) {
-        
+
         let result = this.baskets.filter(basket => {
           return basket.name === item.name && basket.price === option.price;
         });

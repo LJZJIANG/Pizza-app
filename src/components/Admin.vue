@@ -14,7 +14,7 @@
             <th>删除</th>
           </tr>
         </thead>
-        <tbody v-for="item in MenuItems" :key="item.name">
+        <tbody v-for="item in getMenuItems" :key="item.name">
           <tr>
             <td>{{item.name}}</td>
             <td>
@@ -37,24 +37,53 @@ export default {
   components: {
     newPizza
   },
-  created() {
-    fetch("https://wd4944622902dibypg.wilddogio.com/menu.json", {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json"
+  computed:{
+    getMenuItems:{
+      get(){
+        // return this.$store.state.menuItems;
+        return this.$store.getters.getMenuItems
+      },
+      set(){
+
       }
-    })
-      .then(res => res.json())
-      .then(data => {
-        // console.log(data);
+    }
+  },
+
+  created() {
+    // fetch("https://wd4944622902dibypg.wilddogio.com/menu.json", {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-type": "application/json"
+    //   }
+    // })
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     // console.log(data);
+    //     let menuArr = [];
+    //     for (const key in data) {
+    //       // 给每个数据绑定一个id（key，因为此处key是唯一的），用于删除数据
+    //       data[key].id = key;
+    //       menuArr.push(data[key]);
+    //     }
+    //     this.MenuItems = menuArr;
+    //   });
+
+    /**
+     * 通过 axios + vuex 处理
+     *
+     */
+
+    this.$axios.get('https://wd4944622902dibypg.wilddogio.com/menu.json')
+      .then(res=>{
+        let data = res.data;
         let menuArr = [];
-        for (const key in data) {
-          // 给每个数据绑定一个id（key，因为此处key是唯一的），用于删除数据
+        for(let key in data){
           data[key].id = key;
           menuArr.push(data[key]);
         }
-        this.MenuItems = menuArr;
-      });
+        this.$store.commit('setMenuItems',menuArr);
+      })
+
   },
   methods: {
     deleteData(item) {
@@ -69,12 +98,12 @@ export default {
       )
         .then(res => {
           if (res.status == 200) {
-            console.log(res);
             res.json();
           }
         })
         .then(data => {
-          this.$router.push("menu");
+          // this.$router.push("menu");
+          this.$store.commit('deleteMenu',item);
         })
         .catch(err => {
           console.log(err);

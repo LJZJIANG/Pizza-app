@@ -20,7 +20,7 @@
         <input type="text" class="form-control" v-model="newPizza.size">
       </div>
     </div>
-     <div class="form-group row">
+    <div class="form-group row">
       <label class="col-sm-1">价格</label>
       <div class="col-sm-11">
         <input type="text" class="form-control" v-model="newPizza.price">
@@ -34,7 +34,7 @@
         <input type="text" class="form-control" v-model="newPizza.size1">
       </div>
     </div>
-     <div class="form-group row">
+    <div class="form-group row">
       <label class="col-sm-1">价格</label>
       <div class="col-sm-11">
         <input type="text" class="form-control" v-model="newPizza.price1">
@@ -46,49 +46,67 @@
   </form>
 </template>
 <script>
-export default {
-  data(){
-      return{
-          newPizza:{}
+  export default {
+    data() {
+      return {
+        newPizza: {}
       }
-  },
-  methods:{
-      addMenuItem(){
-          let data = {
-            name:this.newPizza.name,
-            description:this.newPizza.description,
-            options:[
-              {
-                price:this.newPizza.price,
-                size:this.newPizza.size
-              },
-              {
-                price:this.newPizza.price1,
-                size:this.newPizza.size1
-              }
-            ]
-          }
-          // feach 方式请求数据
+    },
+    methods: {
+      addMenuItem() {
+        let data = {
+          name: this.newPizza.name,
+          description: this.newPizza.description,
+          options: [
+            {
+              price: this.newPizza.price,
+              size: this.newPizza.size
+            },
+            {
+              price: this.newPizza.price1,
+              size: this.newPizza.size1
+            }
+          ]
+        }
+        if (!this.newPizza.name || !this.newPizza.description|| !this.newPizza.price ||
+          !this.newPizza.size || !this.newPizza.price1 || !this.newPizza.size1){
+          alert('还有内容未填,请完善');
+          return
+        }
+        // feach 方式请求数据
 
-          // fetch('menu.json',{
-          //   method:'POST',
-          //   headers:{
-          //     'Content-type':'application/json'
-          //   },
-          //   body:JSON.stringify(data)// 必须转换我为字符串，不然会提示跨域
-          // }).then(res=>{
-          //   return res.json(); // 将数据转换为json格式
-          // }).then(data=>{
-          //   // console.log(data)
-          //   this.$router.push('menu');
-          // }).catch(err=>{
-          //   console.log(err);
-          // })
-
-          // axios 方式请求数据
-          this.$axios.post('menu.json',data)
-          .then(res=> this.$router.push('menu'))
+        // fetch('menu.json',{
+        //   method:'POST',
+        //   headers:{
+        //     'Content-type':'application/json'
+        //   },
+        //   body:JSON.stringify(data)// 必须转换我为字符串，不然会提示跨域
+        // }).then(res=>{
+        //   return res.json(); // 将数据转换为json格式
+        // }).then(data=>{
+        //   // console.log(data)
+        //   this.$router.push('menu');
+        // }).catch(err=>{
+        //   console.log(err);
+        // })
+        // axios 方式请求数据
+          this.$axios.post('menu.json', data)
+          // .then(res=> this.$router.push('menu'))
+            .then(res => {
+              //  将数据同步到vuex中
+              this.$store.commit('pushToMenuItems', data)
+              this.resetForm();
+            })
+      },
+      // 重置表单
+      resetForm() {
+        this.newPizza.name = "";
+        this.newPizza.description = "";
+        this.newPizza.price = "";
+        this.newPizza.size = "";
+        this.newPizza.price1 = "";
+        this.newPizza.size1 = "";
       }
+    }
   }
-}
 </script>

@@ -47,6 +47,12 @@ export default {
       this.$router.push({ name: "about" });
       // this.$router.push({path:'/register'})
     }
+  },
+  mounted(){
+    // 判断是否登录
+    if(!this.$store.getters.isLogin){
+      this.$router.push('login');
+    }
   }
 };
 </script>
