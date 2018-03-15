@@ -5,7 +5,6 @@
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
-import index from "../router";
 
 Vue.use(Vuex)
 
