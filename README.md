@@ -2,6 +2,9 @@
 
 > vue 全家桶项目
 
+**项目演示地址**
+<code>https://ljzjiang.github.io/Pizza-app/dist</code>
+
 ## Build Setup
 
 ``` bash
