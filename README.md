@@ -3,7 +3,7 @@
 > vue 全家桶项目
 
 **项目演示地址**
-<code>https://ljzjiang.github.io/Pizza-app/dist</code>
+[点我点我点我](https://ljzjiang.github.io/Pizza-app/dist)
 
 ## Build Setup
 
