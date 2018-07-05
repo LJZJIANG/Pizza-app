@@ -17,10 +17,9 @@ import Delivery from '../components/about/Delivery'
 import Phone from '../components/about/contact/Phone'
 import Address from '../components/about/contact/Address'
 
-Vue.use(Router)
+Vue.use(Router) 
 
 export default new Router({
-  mode: 'history',
   routes: [{
       path: '/',
       name: 'home',
