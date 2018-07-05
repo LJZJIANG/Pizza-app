@@ -20,7 +20,6 @@ import Address from '../components/about/contact/Address'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
   routes: [{
       path: '/',
       name: 'home',
